@@ -1,0 +1,765 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: King's College Hospital - Paediatric Liver Service
+  contact:
+    url: ''
+    email: ''
+  description: KCH Paediatric Liver Service website API.
+  license:
+    url: ''
+    name: ''
+tags:
+- name: appinfo
+  description: Create and update application information
+- name: sites
+  description: Create, retrieve, update and delete sites and their pages
+- name: images
+  description: Image uploading and management
+- name: news
+  description: Create, retrieve, update and delete news posts
+- name: medicines
+  description: Create, retrieve, update and delete medicines
+- name: users
+  description: Manage authentication and user profiles
+paths:
+  /appinfo:
+    get:
+      tags:
+      - appinfo
+      summary: Get the application information
+      produces:
+      - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/AppInfo'
+    put:
+      tags:
+      - appinfo
+      summary: Update the application information
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: AppInfo object to be updated
+        required: true
+        schema:
+          $ref: '#/definitions/AppInfo'
+      responses:
+        204:
+          description: No content
+      security:
+      - ApiKeyHeader: []
+  /sites:
+    get:
+      tags:
+      - sites
+      summary: Get a list of all sites
+      produces:
+      - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SiteDescription'
+    put:
+      summary: Update an existing site
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Site object to be updated
+        required: true
+        schema:
+          $ref: '#/definitions/SiteDescription'
+      responses:
+        204:
+          description: No content
+      security:
+      - ApiKeyHeader: []
+      tags:
+      - sites
+    post:
+      tags:
+      - sites
+      summary: Add a new site
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Site object to be added
+        required: true
+        schema:
+          $ref: '#/definitions/SiteDescription'
+      responses:
+        201:
+          description: Created
+      security:
+      - ApiKeyHeader: []
+  /sites/{siteSlug}:
+    parameters:
+    - name: siteSlug
+      in: path
+      description: Site slug
+      required: true
+      type: string
+    get:
+      tags:
+      - sites
+      summary: Get a site and all of its pages
+      produces:
+      - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Site'
+    delete:
+      summary: Delete an existing site
+      responses:
+        204:
+          description: No content
+      security:
+      - ApiKeyHeader: []
+      tags:
+        - sites
+  /sites/{siteSlug}/pages:
+    parameters:
+    - name: siteSlug
+      in: path
+      description: Site slug
+      required: true
+      type: string
+    put:
+      summary: Update an existing page
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Site object to be updated
+        required: true
+        schema:
+          $ref: '#/definitions/Page'
+      responses:
+        204:
+          description: No content
+      security:
+      - ApiKeyHeader: []
+      tags:
+      - sites
+    post:
+      tags:
+      - sites
+      summary: Add a new page
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Site object to be added
+        required: true
+        schema:
+          $ref: '#/definitions/Page'
+      responses:
+        201:
+          description: Created
+      security:
+      - ApiKeyHeader: []
+  /sites/{siteSlug}/pages/{pageSlug}:
+    parameters:
+    - name: siteSlug
+      in: path
+      description: Site slug
+      required: true
+      type: string
+    - name: pageSlug
+      in: path
+      description: Page slug
+      required: true
+      type: string
+    get:
+      tags:
+      - sites
+      summary: Get a page
+      produces:
+      - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Page'
+    delete:
+      summary: Delete an existing page
+      responses:
+        204:
+          description: No content
+      security:
+      - ApiKeyHeader: []
+      tags:
+      - sites
+  /sites/{siteSlug}/page-indices:
+    parameters:
+    - name: siteSlug
+      in: path
+      description: Site slug
+      required: true
+      type: string
+    patch:
+      tags:
+      - sites
+      summary: Alter page indices for all pages in a site
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Array of sites and their indices
+        required: true
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/PageIndex'
+      responses:
+        204:
+          description: No content
+      security:
+      - ApiKeyHeader: []
+  /images:
+    post:
+      tags:
+      - images
+      summary: Add a new image
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - in: formData
+        name: file
+        description: Image content
+        required: true
+        type: file
+      responses:
+        201:
+          description: Created
+          schema:
+            type: string
+            description: File name and extension of the uploaded image
+            example: E85GXH3E.webp
+      security:
+      - ApiKeyHeader: []
+  /images/{image}:
+    parameters:
+    - name: image
+      in: path
+      description: Image file name and extension
+      required: true
+      type: string
+    get:
+      tags:
+      - images
+      summary: Get an image
+      produces:
+      - image
+      responses:
+        200:
+          description: OK
+          schema:
+            type: file
+    delete:
+      tags:
+      - images
+      summary: Delete an existing image
+      responses:
+        204:
+          description: No content
+      security:
+      - ApiKeyHeader: []
+  /news:
+    get:
+      tags:
+      - news
+      summary: Get a list of all news
+      produces:
+      - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/News'
+    put:
+      summary: Update an existing news post
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: News object to be updated
+        required: true
+        schema:
+          $ref: '#/definitions/News'
+      responses:
+        204:
+          description: No content
+      security:
+      - ApiKeyHeader: []
+      tags:
+      - news
+    post:
+      tags:
+      - news
+      summary: Add a new news post
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Site object to be added
+        required: true
+        schema:
+          $ref: '#/definitions/News'
+      responses:
+        201:
+          description: Created
+      security:
+      - ApiKeyHeader: []
+  /news/{newsSlug}:
+    parameters:
+    - name: newsSlug
+      in: path
+      description: News slug
+      required: true
+      type: string
+    delete:
+      summary: Delete an existing news post
+      responses:
+        204:
+          description: No content
+      security:
+      - ApiKeyHeader: []
+      tags:
+        - news
+  /medicines:
+    get:
+      tags:
+      - medicines
+      summary: Get a list of all medicines
+      produces:
+      - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Medicine'
+    put:
+      summary: Update an existing medicine
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Medicine object to be updated
+        required: true
+        schema:
+          $ref: '#/definitions/Medicine'
+      responses:
+        204:
+          description: No content
+      security:
+      - ApiKeyHeader: []
+      tags:
+      - medicines
+    post:
+      tags:
+      - medicines
+      summary: Add a new medicine
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Medicine object to be added
+        required: true
+        schema:
+          $ref: '#/definitions/Medicine'
+      responses:
+        201:
+          description: Created
+      security:
+      - ApiKeyHeader: []
+  /medicines/{medicineId}:
+    parameters:
+    - name: medicineId
+      in: path
+      description: Medicine ID
+      required: true
+      type: number
+    delete:
+      summary: Delete an existing medicine
+      responses:
+        204:
+          description: No content
+      security:
+      - ApiKeyHeader: []
+      tags:
+        - medicines
+  /user:
+    get:
+      tags:
+      - users
+      summary: Get a list of all users
+      produces:
+      - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/UserInfo'
+      security:
+      - ApiKeyHeader: []
+  /user/user_details:
+    get:
+      tags:
+      - users
+      summary: Get details of the currently authenticated user
+      produces:
+      - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/UserInfo'
+      security:
+      - ApiKeyHeader: []
+  /user/create:
+    post:
+      tags:
+      - users
+      summary: Add a new user
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: User object to be added
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        201:
+          description: Created
+      security:
+      - ApiKeyHeader: []
+  /user/delete:
+    delete:
+      tags:
+      - users
+      summary: Delete an existing user
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: User object to be deleted
+        required: true
+        schema:
+          $ref: '#/definitions/UserAuth'
+      responses:
+        200:
+          description: OK
+      security:
+      - ApiKeyHeader: []
+  /user/login:
+    post:
+      tags:
+      - users
+      summary: Login
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: User to login
+        required: true
+        schema:
+          $ref: '#/definitions/UserAuth'
+      responses:
+        200:
+          description: OK
+          schema:
+            type: string
+            description: API key
+            example: pbOxUSOdf7115huJgud3GYci4F
+  /user/logout:
+    get:
+      tags:
+      - users
+      summary: Logout
+      responses:
+        200:
+          description: OK
+      security:
+      - ApiKeyHeader: []
+  /user/password_reset_request:
+    post:
+      tags:
+      - users
+      summary: Request a password reset token
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Email of the user to reset
+        required: true
+        schema:
+          type: object
+          properties:
+            string:
+              type: string
+              format: email
+              example: jane.doe@example.com
+      responses:
+        200:
+          description: OK (even if the email is not recognised)
+  /user/password_reset_change:
+    put:
+      tags:
+      - users
+      summary: Complete a password reset
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Reset token and new password
+        required: true
+        schema:
+          type: object
+          properties:
+            token:
+              type: string
+            password:
+              type: string
+      responses:
+        200:
+          description: OK
+  /user/change_email:
+    put:
+      tags:
+      - users
+      summary: Change user email
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: New email
+        required: true
+        schema:
+          type: object
+          properties:
+            string:
+              type: string
+              format: email
+              example: john.doe@example.com
+      responses:
+        200:
+          description: OK
+      security:
+      - ApiKeyHeader: []
+  /user/change_name:
+    put:
+      tags:
+      - users
+      summary: Change user name
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: New name
+        required: true
+        schema:
+          type: object
+          properties:
+            string:
+              type: string
+              example: John Doe
+      responses:
+        200:
+          description: OK
+      security:
+      - ApiKeyHeader: []
+  /user/change_password:
+    put:
+      tags:
+      - users
+      summary: Change user password
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: New password
+        required: true
+        schema:
+          type: object
+          properties:
+            string:
+              type: string
+      responses:
+        200:
+          description: OK
+      security:
+      - ApiKeyHeader: []
+securityDefinitions:
+  ApiKeyHeader:
+    type: apiKey
+    in: header
+    name: X-API-Key
+definitions:
+  UserInfo:
+    type: object
+    properties:
+      name:
+        type: string
+        example: Jane Doe
+      email:
+        type: string
+        format: email
+        example: jane.doe@example.com
+  UserAuth:
+    type: object
+    properties:
+      email:
+        type: string
+        format: email
+        example: jane.doe@example.com
+      password:
+        type: string
+  User:
+    allOf:
+    - $ref: '#/definitions/UserInfo'
+    - $ref: '#/definitions/UserAuth'
+  AppInfo:
+    type: object
+    properties:
+      hospitalName:
+        type: string
+        example: King's College Hospital
+      departmentName:
+        type: string
+        example: Paediatric Liver Service
+      contactDetails:
+        type: string
+        example: Contact us, the liver specialist team on 1234-567-789
+  SiteDescription:
+    type: object
+    properties:
+      primaryKey:
+        type: number
+      slug:
+        type: string
+        example: biliary-atresia
+      name:
+        type: string
+        example: Biliary Atresia
+      description:
+        type: string
+        example: A rare disease of the liver and bile ducts that occurs in infants.
+  Site:
+    allOf:
+    - $ref: '#/definitions/SiteDescription'
+    - type: object
+      properties:
+        pages:
+          type: array
+          items:
+            $ref: '#/definitions/Page'
+  Page:
+    allOf:
+    - $ref: '#/definitions/PageIndex'
+    - type: object
+      properties:
+        primaryKey:
+          type: number
+        title:
+          type: string
+          example: Introduction
+        content:
+          type: string
+  PageIndex:
+    type: object
+    properties:
+      slug:
+        type: string
+        example: introduction
+      index:
+        type: integer
+        example: 0
+  News:
+    type: object
+    properties:
+      primaryKey:
+        type: number
+      title:
+        type: string
+        example: Coronavirus Information
+      description:
+        type: string
+        example: Read our official advice regarding COVID-19.
+      content:
+        type: string
+      slug:
+        type: string
+        example: 20200315-coronavirus-information
+      date:
+        type: string
+        format: date
+        example: 2020-03-15
+      pinned:
+        type: boolean
+        example: true
+      urgent:
+        type: boolean
+        example: false
+  Medicine:
+    type: object
+    properties:
+      primaryKey:
+        type: number
+      name:
+        type: string
+        example: Ursodeoxycholic Acid
+      type:
+        type: string
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /CallumWatkins/KCH-PLS/1.0.0
+schemes:
+ - https

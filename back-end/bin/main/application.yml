@@ -1,0 +1,38 @@
+datasources:
+  default:
+    url: ${JDBC_URL:`jdbc:mysql://127.0.0.1:3306/testunittest`}
+    username: ${JDBC_USER:root}
+    password: ${JDBC_PASSWORD:}
+    driverClassName: ${JDBC_DRIVER:com.mysql.jdbc.Driver}
+    dialect: org.hibernate.dialect.MySQL8Dialect
+
+jpa:
+  default:
+    packages-to-scan:
+      - 'com.projectBackEnd.Services'
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+        show_sql: true
+
+micronaut:
+  server:
+    cors:
+      enabled: true
+      configurations:
+        web:
+          allowedOrigins:
+            - http://localhost:8081
+            - 3.127.132.71
+            - https://paediatric-liver-service.netlify.com
+    maxRequestSize: 100MB
+    multipart:
+      maxFileSize: 100MB
+    host: localhost
+    netty:
+      maxHeaderSize: 500KB
+      worker:
+        threads: 8
+      childOptions:
+        autoRead: true

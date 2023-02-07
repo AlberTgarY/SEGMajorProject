@@ -1,0 +1,10 @@
+$family-sans-serif: 'Open Sans';
+
+
+@import 'bulma';
+@import 'global-styles';
+
+html, body {
+    height: 100%;
+    overflow: auto;
+}

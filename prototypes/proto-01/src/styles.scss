@@ -1,0 +1,32 @@
+$family-sans-serif: 'Open Sans';
+
+// Color Scheme 1
+$primary: #5553ec;
+$primary-light: #9b99ee;
+$primary-dark: #4240b9;
+$primary-darker: #292877;
+
+$grey-primary: #aaaad3;
+
+
+// Color Scheme 2
+// $primary: #38a7e8;
+// $primary-light: #8ecdf1;
+// $primary-dark: #2e5da3;
+// $primary-darker: #1b3f75;
+
+// $grey-primary: #a7c4d4;
+
+
+
+@import 'bulma';
+@import 'global-styles';
+
+html, body {
+    height: 100%;
+    overflow: auto;
+}
+
+.title {
+    color: $primary-dark;
+}

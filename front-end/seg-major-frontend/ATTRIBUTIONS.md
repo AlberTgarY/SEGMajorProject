@@ -1,0 +1,16 @@
+### Licenses of included packages/resources
+
+- Vue.js - [MIT](https://github.com/vuejs/vue/blob/dev/LICENSE)
+- Bulma - [MIT](https://github.com/jgthms/bulma/blob/master/LICENSE)
+- tiptap (& tiptap-extensions) - [MIT](https://github.com/scrumpy/tiptap/blob/master/LICENSE.md)
+- vue-fontawesome - [MIT](https://github.com/FortAwesome/vue-fontawesome/blob/master/LICENSE.txt)
+- FontAwesome Icons - [CC BY 4.0](https://fontawesome.com/license/free)
+- axios - [MIT](https://github.com/axios/axios/blob/master/LICENSE)
+- core-js - [MIT](https://github.com/zloirock/core-js/blob/master/LICENSE)
+- express - [MIT](https://github.com/expressjs/express/blob/master/LICENSE)
+- vue-multiselect - [MIT](https://github.com/shentao/vue-multiselect/blob/master/LICENSE)
+- Vue Meta - [MIT](https://github.com/nuxt/vue-meta/blob/master/LICENSE.md)
+- vue-print-nb - [MIT](https://github.com/Power-kxLee/vue-print-nb#license)
+- vue-router - [MIT](https://github.com/vuejs/vue-router/blob/dev/LICENSE)
+- Vue.Draggable - [MIT](https://github.com/SortableJS/Vue.Draggable/blob/master/LICENSE)
+- vuelidate - [MIT](https://github.com/vuelidate/vuelidate/blob/master/LICENSE)

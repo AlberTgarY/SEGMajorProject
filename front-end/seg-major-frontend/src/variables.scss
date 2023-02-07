@@ -1,0 +1,14 @@
+$family-sans-serif: 'Open Sans';
+
+$primary: #35c58a;
+$primary-light: #53b8a5;
+$primary-dark: #15805a;
+$primary-darker: #137553;
+
+$grey-primary: #9ec5bd;
+
+$danger: #e43759;
+
+@import "~bulma/sass/utilities/functions";
+@import "~bulma/sass/utilities/initial-variables";
+@import "~bulma/sass/utilities/derived-variables";
